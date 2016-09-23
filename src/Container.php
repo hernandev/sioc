@@ -13,11 +13,6 @@ class Container
     protected static $instance;
 
     /**
-     * @var array List of IoC Bindings
-     */
-    protected $bindings = [];
-
-    /**
      * @return Container Current Sioc container instance
      */
     public static function getInstance()
