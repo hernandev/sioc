@@ -9,3 +9,4 @@ $container->register('user', \Demo\User::class);
 $user = $container->make('user');
 
 var_dump($user);
+var_dump($user->getName());
