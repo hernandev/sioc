@@ -1,4 +1,5 @@
 <?php
+
 namespace Demo;
 
 /**
@@ -6,5 +7,5 @@ namespace Demo;
  */
 class Foo
 {
-
+    //
 }

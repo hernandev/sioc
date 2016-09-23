@@ -65,5 +65,38 @@ class Container
         }
     }
 
+    /**
+     * Resolves and created a new instance of a desired class.
+     *
+     * @param $alias
+     * @return object
+     */
+    public function make($alias)
+    {
+        if (class_exists($alias)) {
+            return $this->makeInstance($alias);
+        }
 
+        if (array_key_exists($alias, $this->bindings)) {
+            $className = $this->bindings[$alias];
+
+            return $this->makeInstance($className);
+        }
+
+
+        throw new \RuntimeException('Desired class not found!');
+    }
+
+    /**
+     * Created a instance of a desired class.
+     *
+     * @param $className
+     * @return object
+     */
+    protected function makeInstance($className)
+    {
+        $reflection = new \ReflectionClass($className);
+
+        return $reflection->newInstance();
+    }
 }

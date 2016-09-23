@@ -6,4 +6,6 @@ $container = \Sioc\Container::getInstance();
 
 $container->register('foo', \Demo\Foo::class);
 
-var_dump($container);
+$foo = $container->make('foo');
+
+var_dump($foo);
