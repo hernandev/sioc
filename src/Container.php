@@ -13,6 +13,22 @@ class Container
     protected static $instance;
 
     /**
+     * @var array List of IoC Bindings, empty array for default
+     */
+    protected $bindings = [];
+
+    /**
+     * Container constructor.
+     *
+     * Constructor is protected so people can never
+     * do "new Container()"
+     */
+    protected function __construct()
+    {
+        //
+    }
+
+    /**
      * @return Container Current Sioc container instance
      */
     public static function getInstance()
@@ -27,13 +43,27 @@ class Container
     }
 
     /**
-     * Container constructor.
+     * Register a class or alias into the Container.
      *
-     * Constructor is protected so people can never
-     * do "new Container()"
+     * @param $alias Interface/Class/Alias register
+     * @param $implementation Current implementation
      */
-    protected function __construct()
+    public function register($alias, $implementation)
     {
-        //
+        $this->bindings[$alias] = $implementation;
     }
+
+    /**
+     * UnRegister a Interface/Class/Alias.
+     *
+     * @param $aliasOrClassName
+     */
+    public function unRegister($aliasOrClassName)
+    {
+        if (array_key_exists($aliasOrClassName, $this->bindings)) {
+            unset($this->bindings[$aliasOrClassName]);
+        }
+    }
+
+
 }
