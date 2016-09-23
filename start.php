@@ -4,8 +4,8 @@ require __DIR__.'/vendor/autoload.php';
 
 $container = \Sioc\Container::getInstance();
 
-$container->register('foo', \Demo\Foo::class);
+$container->register('user', \Demo\User::class);
 
-$foo = $container->make('foo');
+$user = $container->make('user');
 
-var_dump($foo);
+var_dump($user);

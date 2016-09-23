@@ -84,7 +84,7 @@ class Container
         }
 
 
-        throw new \RuntimeException('Desired class not found!');
+        return null;
     }
 
     /**
@@ -95,8 +95,39 @@ class Container
      */
     protected function makeInstance($className)
     {
+        // class reflection
         $reflection = new \ReflectionClass($className);
 
-        return $reflection->newInstance();
+        // get the class constructor
+        $constructor = $reflection->getConstructor();
+
+        // if there is no constructor, just create and
+        // return a new instance
+        if (!$constructor) {
+            return $reflection->newInstance();
+        }
+
+        // if there is parameters, get them!
+        $constructorParameters = $constructor->getParameters();
+
+        // resolved array of parameters
+        $parametersToPass = [];
+
+        // for each expected parameter,
+        // go through the container and resolve it
+        foreach($constructorParameters as $parameter) {
+            // get the expected class
+            $parameterClassName = $parameter->getClass()->name;
+
+            // if there is a class
+            if ($parameterClassName) {
+                // ask the container to resolve it
+                $parametersToPass[] = self::make($parameterClassName);
+            }
+        }
+
+        // created and returns the new instance passing the
+        // resolved parameters
+        return $reflection->newInstanceArgs($parametersToPass ? $parametersToPass : []);
     }
 }
