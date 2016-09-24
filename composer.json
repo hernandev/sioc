@@ -1,0 +1,24 @@
+{
+    "name": "hernandev/sioc",
+    "description": "Very simple Prove of Concept Inversion of Control Container",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Diego Hernandes",
+            "email": "diego@hernandev.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Sioc\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Demo\\": "demo/"
+        }
+    }
+}
