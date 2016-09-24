@@ -9,7 +9,7 @@ class User
 {
     protected $db;
 
-    public function __construct(Database $db)
+    public function __construct(DatabaseInterface $db)
     {
         $this->db = $db;
     }
@@ -17,5 +17,10 @@ class User
     public function getName()
     {
         return $this->db->getName();
+    }
+
+    public function getDatabase()
+    {
+        return $this->db;
     }
 }

@@ -73,14 +73,19 @@ class Container
      */
     public function make($alias)
     {
+
         if (class_exists($alias)) {
             return $this->makeInstance($alias);
         }
 
         if (array_key_exists($alias, $this->bindings)) {
-            $className = $this->bindings[$alias];
+            $classOrObject = $this->bindings[$alias];
 
-            return $this->makeInstance($className);
+            if (is_object($classOrObject)) {
+                return $classOrObject;
+            }
+
+            return $this->makeInstance($classOrObject);
         }
 
 
@@ -97,7 +102,6 @@ class Container
     {
         // class reflection
         $reflection = new \ReflectionClass($className);
-
         // get the class constructor
         $constructor = $reflection->getConstructor();
 
