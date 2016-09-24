@@ -73,22 +73,31 @@ class Container
      */
     public function make($alias)
     {
-
-        if (class_exists($alias)) {
-            return $this->makeInstance($alias);
-        }
-
+        // if the alias or class name is registered
         if (array_key_exists($alias, $this->bindings)) {
+            // get it
             $classOrObject = $this->bindings[$alias];
 
+            // if is an object, just return it (singleton)
             if (is_object($classOrObject)) {
                 return $classOrObject;
             }
 
-            return $this->makeInstance($classOrObject);
+            // if not object by a valid class, create and
+            // return a new instance
+            if (class_exists($classOrObject)) {
+                return $this->makeInstance($classOrObject);
+            }
         }
 
+        // maybe it's not registered on the container
+        // but still a valid class, in this case
+        // create and return
+        if (class_exists($alias)) {
+            return $this->makeInstance($alias);
+        }
 
+        // otherwise just return null
         return null;
     }
 
